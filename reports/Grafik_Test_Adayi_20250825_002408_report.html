@@ -1,0 +1,451 @@
+
+        <!DOCTYPE html>
+        <html lang="tr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>İK Değerlendirme Raporu</title>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 40px;
+                    background-color: #f5f5f5;
+                }
+                .container {
+                    background-color: white;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                    max-width: 1000px;
+                    margin: 0 auto;
+                }
+                .header {
+                    text-align: center;
+                    color: #2c3e50;
+                    border-bottom: 3px solid #3498db;
+                    padding-bottom: 20px;
+                    margin-bottom: 30px;
+                }
+                .section {
+                    margin-bottom: 30px;
+                    padding: 20px;
+                    background-color: #f8f9fa;
+                    border-left: 5px solid #3498db;
+                    border-radius: 5px;
+                }
+                .score-box {
+                    display: inline-block;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    margin: 10px;
+                    text-align: center;
+                    min-width: 120px;
+                }
+                .emotion-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 15px;
+                    margin: 20px 0;
+                }
+                .emotion-item {
+                    background-color: white;
+                    padding: 15px;
+                    border-radius: 8px;
+                    border: 2px solid #ecf0f1;
+                    text-align: center;
+                }
+                .progress-bar {
+                    background-color: #ecf0f1;
+                    border-radius: 10px;
+                    height: 20px;
+                    margin: 10px 0;
+                    overflow: hidden;
+                }
+                .progress-fill {
+                    height: 100%;
+                    border-radius: 10px;
+                    transition: width 0.3s ease;
+                }
+                .excellent { background-color: #27ae60; }
+                .good { background-color: #f39c12; }
+                .average { background-color: #e74c3c; }
+                .recommendation {
+                    background-color: #e8f6f3;
+                    border: 2px solid #1abc9c;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin: 20px 0;
+                }
+                .text-content {
+                    background-color: #f8f9fa;
+                    padding: 15px;
+                    border-radius: 5px;
+                    white-space: pre-wrap;
+                    font-family: 'Courier New', monospace;
+                    font-size: 14px;
+                    max-height: 300px;
+                    overflow-y: auto;
+                }
+                .chart-container {
+                    width: 100%;
+                    height: 350px;
+                    margin: 20px 0;
+                    position: relative;
+                }
+                .charts-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 30px;
+                    margin: 30px 0;
+                    min-height: 400px;
+                }
+                .chart-box {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                    height: 350px;
+                    overflow: hidden;
+                }
+                .chart-canvas {
+                    width: 100% !important;
+                    height: 250px !important;
+                    max-width: 100%;
+                    max-height: 250px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>İK Video Değerlendirme Raporu</h1>
+                    <p><strong>Aday:</strong> Grafik Test Adayi | <strong>Pozisyon:</strong> Duzeltilmis Grafik Testi</p>
+                    <p><strong>Tarih:</strong> 25.08.2025 00:24</p>
+                </div>
+
+                <div class="section">
+                    <h2>🎯 Genel Değerlendirme</h2>
+                    <div class="score-box">
+                        <h3>Toplam Skor</h3>
+                        <h2>66/100</h2>
+                    </div>
+                    <div class="score-box">
+                        <h3>İletişim</h3>
+                        <h2>85/100</h2>
+                    </div>
+                    <div class="score-box">
+                        <h3>Motivasyon</h3>
+                        <h2>75/100</h2>
+                    </div>
+                    <div class="score-box">
+                        <h3>Güven</h3>
+                        <h2>80/100</h2>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📊 Görsel Duygu Analizi</h2>
+                    <div class="charts-grid">
+                        <div class="chart-box">
+                            <h3>Yüz İfadeleri Dağılımı (Neutral Hariç)</h3>
+                            <canvas id="emotionsChart" class="chart-canvas"></canvas>
+                        </div>
+                        <div class="chart-box">
+                            <h3>Genel Duygusal Durum</h3>
+                            <canvas id="sentimentChart" class="chart-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <h3>Detaylı Duygu Skorları</h3>
+                    <div class="emotion-grid">
+        
+                        <div class="emotion-item">
+                            <h4>Mutluluk</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 5%"></div>
+                            </div>
+                            <p>5%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Üzüntü</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Öfke</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Şaşkınlık</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Korku</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Nötr</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill excellent" style="width: 95%"></div>
+                            </div>
+                            <p>95%</p>
+                        </div>
+            
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>🎤 Ses ve Konuşma Analizi</h2>
+                    <div class="emotion-grid">
+                        <div class="emotion-item">
+                            <h4>Enerji Seviyesi</h4>
+                            <p>Medium</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Konuşma Hızı</h4>
+                            <p>Normal</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Duygusal Yoğunluk</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill good" style="width: 20%"></div>
+                            </div>
+                            <p>20%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>🤝 Beden Dili Değerlendirmesi</h2>
+                    <div class="emotion-grid">
+        
+                        <div class="emotion-item">
+                            <h4>Postür</h4>
+                            <p>Good</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>El Hareketleri</h4>
+                            <p>Minimal</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Göz Teması</h4>
+                            <p>Excellent</p>
+                        </div>
+            
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📊 Duygusal Dağılım</h2>
+                    <div class="emotion-grid">
+                        <div class="emotion-item">
+                            <h4>Pozitif</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill excellent" style="width: 10%"></div>
+                            </div>
+                            <p>10%</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Negatif</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Nötr</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill good" style="width: 90%"></div>
+                            </div>
+                            <p>90%</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Stres Seviyesi</h4>
+                            <p>Low</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📝 Video İçerik Analizi</h2>
+                    <div class="text-content">TRANSKRIPT:
+Merhaba, ben avukat Kaan Deniz. Hava hukuku ve uçak motorları alanında uzmanım. Yeditepe Üniversitesi'nde 3 yıl boyunca hava taşımacılığı sözleşmeleri, sorumluluk rejimleri ve uçak motorlarının uluslararası transfer süreçleri üzerine ders verdim. Akademideki bu deneyimimi şimdi doğrudan sahada kullanıyorum. Pegasus Hava Yolları başta olmak üzere büyük hava yolu şirketleri ve özel jet işletmelerinde hukuki danışmanlık veriyorum. Çalışmalarımda özellikle uçak motoru alım satımı ve kiralama sözleşmeleri, uluslararası transferlerde teknik kayıtların netleştirilmesi, ödeme teslim uyumunun sağlanması ve gümrük süreçlerinin sorunsuz yönetimi öne çıkıyor. Hem akademik hem de pratik tecrübem sayesinde havacılık sektörü şirketlerine karmaşık uluslararası işlemleri güvenli ve hızlı biçimde sonuçlandırmaları için destek oluyorum.
+
+EKRAN METİNLERİ:
+Bu videoda ekranda görünen herhangi bir yazı bulunmamaktadır.
+
+ANA KONULAR:
+*   **Konuşmacının Kimliği ve Uzmanlık Alanları:** Avukat Kaan Deniz, hava hukuku ve uçak motorları alanında uzmanlaşmıştır.
+*   **Akademik Geçmiş:** Yeditepe Üniversitesi'nde 3 yıl boyunca hava taşımacılığı sözleşmeleri, sorumluluk rejimleri ve uluslararası uçak motoru transfer süreçleri üzerine ders vermiştir.
+*   **Profesyonel Deneyim:** Halihazırda Pegasus Hava Yolları gibi büyük hava yolu şirketleri ve özel jet işletmelerine hukuki danışmanlık hizmeti vermektedir.
+*   **Hizmet Alanları:** Uçak motoru alım satımı, kiralama sözleşmeleri, uluslararası transferlerde teknik kayıtların netleştirilmesi, ödeme ve teslim uyumunun sağlanması, gümrük süreçlerinin yönetimi gibi konularda danışmanlık sağlamaktadır.
+*   **Şirketlere Sunduğu Değer:** Hem akademik hem de pratik tecrübesini kullanarak havacılık şirketlerinin uluslararası işlemlerini güvenli ve hızlı bir şekilde tamamlamalarına yardımcı olmaktadır.</div>
+                </div>
+
+                <div class="recommendation">
+                    <h2>💡 İK Önerisi</h2>
+                    <p><strong>Genel Değerlendirme:</strong> İyi bir performans. Aday başarılı olabilir, bazı alanlarda gelişim gösterebilir.</p>
+                    
+                    <h4>Güçlü Yanlar:</h4>
+                    <ul>
+                        <li>İletişim becerileri güçlü</li>
+<li>Kendine güveni yüksek</li>
+<li>Motivasyon seviyesi yüksek</li>
+                    </ul>
+                    
+                    <h4>Gelişim Alanları:</h4>
+                    <ul>
+                        <li>Belirgin gelişim alanları tespit edilmedi</li>
+                    </ul>
+                    
+                    <h4>Karar Önerisi:</h4>
+                    <p>🟡 KOŞULLU ÖNERİLİR - İkinci mülakatla desteklenebilir.</p>
+                </div>
+            </div>
+
+            <script>
+                // Yüz İfadeleri Grafik Verileri (Neutral hariç)
+                const emotionsData = {
+                    labels: ['Mutluluk', 'Üzüntü', 'Öfke', 'Şaşkınlık', 'Korku'],
+                    datasets: [{
+                        data: [
+                            5,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        backgroundColor: [
+                            '#FFD700',
+                            '#4682B4', 
+                            '#DC143C',
+                            '#FF69B4',
+                            '#800080'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                };
+
+                // Genel Duygusal Durum Grafik Verileri
+                const sentimentData = {
+                    labels: ['Pozitif', 'Negatif', 'Nötr'],
+                    datasets: [{
+                        data: [
+                            10,
+                            0,
+                            90
+                        ],
+                        backgroundColor: [
+                            '#28a745',
+                            '#dc3545',
+                            '#6c757d'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                };
+
+                // Yüz İfadeleri Pasta Grafik
+                const emotionsCtx = document.getElementById('emotionsChart').getContext('2d');
+                new Chart(emotionsCtx, {
+                    type: 'pie',
+                    data: emotionsData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 12,
+                                    padding: 8,
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + '%';
+                                    }
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 10,
+                                bottom: 10
+                            }
+                        }
+                    }
+                });
+
+                // Genel Duygusal Durum Bar Grafik
+                const sentimentCtx = document.getElementById('sentimentChart').getContext('2d');
+                new Chart(sentimentCtx, {
+                    type: 'bar',
+                    data: sentimentData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    },
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 10,
+                                bottom: 10
+                            }
+                        }
+                    }
+                });
+            </script>
+        </body>
+        </html>
+        

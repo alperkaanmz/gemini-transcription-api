@@ -1,0 +1,701 @@
+
+        <!DOCTYPE html>
+        <html lang="tr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>İK Değerlendirme Raporu</title>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 40px;
+                    background-color: #f5f5f5;
+                }
+                .container {
+                    background-color: white;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                    max-width: 1000px;
+                    margin: 0 auto;
+                }
+                .header {
+                    text-align: center;
+                    color: #2c3e50;
+                    border-bottom: 3px solid #3498db;
+                    padding-bottom: 20px;
+                    margin-bottom: 30px;
+                }
+                .section {
+                    margin-bottom: 30px;
+                    padding: 20px;
+                    background-color: #f8f9fa;
+                    border-left: 5px solid #3498db;
+                    border-radius: 5px;
+                }
+                .score-box {
+                    display: inline-block;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    margin: 10px;
+                    text-align: center;
+                    min-width: 120px;
+                }
+                .emotion-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 15px;
+                    margin: 20px 0;
+                }
+                .emotion-item {
+                    background-color: white;
+                    padding: 15px;
+                    border-radius: 8px;
+                    border: 2px solid #ecf0f1;
+                    text-align: center;
+                }
+                .progress-bar {
+                    background-color: #ecf0f1;
+                    border-radius: 10px;
+                    height: 20px;
+                    margin: 10px 0;
+                    overflow: hidden;
+                }
+                .progress-fill {
+                    height: 100%;
+                    border-radius: 10px;
+                    transition: width 0.3s ease;
+                }
+                .excellent { background-color: #27ae60; }
+                .good { background-color: #f39c12; }
+                .average { background-color: #e74c3c; }
+                .recommendation {
+                    background-color: #e8f6f3;
+                    border: 2px solid #1abc9c;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin: 20px 0;
+                }
+                .text-content {
+                    background-color: #f8f9fa;
+                    padding: 15px;
+                    border-radius: 5px;
+                    white-space: pre-wrap;
+                    font-family: 'Courier New', monospace;
+                    font-size: 14px;
+                    max-height: 300px;
+                    overflow-y: auto;
+                }
+                .chart-container {
+                    width: 100%;
+                    height: 350px;
+                    margin: 20px 0;
+                    position: relative;
+                }
+                .charts-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    gap: 20px;
+                    margin: 30px 0;
+                    min-height: 400px;
+                }
+                .chart-box {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                    height: 350px;
+                    overflow: hidden;
+                }
+                .radar-chart-box {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                    height: 450px;  /* Yüksekliği artırdık */
+                    overflow: visible;  /* Taşmayı görünür yaptık */
+                    grid-column: span 2;
+                    margin-bottom: 20px;  /* Alt boşluk ekledik */
+                }
+                .chart-canvas {
+                    width: 100% !important;
+                    height: 280px !important;  /* Grafik yüksekliğini artırdık */
+                    max-width: 100%;
+                    max-height: 380px !important;  /* Maksimum yüksekliği artırdık */
+                }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>İK Video Değerlendirme Raporu</h1>
+                    <p><strong>Aday:</strong> Azra Begüm Aksoy | <strong>Pozisyon:</strong> Test Pozisyonu</p>
+                    <p><strong>Tarih:</strong> 26.08.2025 19:18</p>
+                </div>
+
+                <div class="section">
+                    <h2>🎯 Genel Değerlendirme</h2>
+                    <div class="score-box">
+                        <h3>Toplam Skor</h3>
+                        <h2>61/100</h2>
+                    </div>
+                    <div class="score-box">
+                        <h3>İletişim</h3>
+                        <h2>70/100</h2>
+                    </div>
+                    <div class="score-box">
+                        <h3>Motivasyon</h3>
+                        <h2>60/100</h2>
+                    </div>
+                    <div class="score-box">
+                        <h3>Güven</h3>
+                        <h2>60/100</h2>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📊 Görsel Duygu Analizi</h2>
+                    <div class="charts-grid">
+                        <div class="chart-box">
+                            <h3>Ana Duygular (Neutral Dahil)</h3>
+                            <canvas id="emotionsChart" class="chart-canvas"></canvas>
+                        </div>
+                        <div class="chart-box">
+                            <h3>Genel Duygusal Durum</h3>
+                            <canvas id="sentimentChart" class="chart-canvas"></canvas>
+                        </div>
+                        <div class="chart-box">
+                            <h3>Detaylı Duygular</h3>
+                            <canvas id="detailedEmotionsChart" class="chart-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 30px 0;">
+                        <div class="radar-chart-box">
+                            <h3>Genel Performans Analizi (Altıgen Grafik)</h3>
+                            <canvas id="radarChart" style="width: 100% !important; height: 300px !important;"></canvas>
+                        </div>
+                    </div>
+                    
+                    <h3>Detaylı Duygu Skorları</h3>
+                    <div class="emotion-grid">
+        
+                        <div class="emotion-item">
+                            <h4>Mutluluk</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 15%"></div>
+                            </div>
+                            <p>15%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Üzüntü</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 5%"></div>
+                            </div>
+                            <p>5%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Öfke</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Şaşkınlık</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Korku</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>İğrenme</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Nötr</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill excellent" style="width: 80%"></div>
+                            </div>
+                            <p>80%</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Güven</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill good" style="width: 60%"></div>
+                            </div>
+                            <p>60%</p>
+                        </div>
+            
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>🎤 Ses ve Konuşma Analizi</h2>
+                    <div class="emotion-grid">
+                        <div class="emotion-item">
+                            <h4>Enerji Seviyesi</h4>
+                            <p>40/100</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Konuşma Hızı</h4>
+                            <p>60/100</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Duygusal Yoğunluk</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill good" style="width: 30%"></div>
+                            </div>
+                            <p>30%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>🤝 Beden Dili Değerlendirmesi</h2>
+                    <div class="emotion-grid">
+        
+                        <div class="emotion-item">
+                            <h4>Postür</h4>
+                            <p>70</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>El Hareketleri</h4>
+                            <p>10</p>
+                        </div>
+            
+                        <div class="emotion-item">
+                            <h4>Göz Teması</h4>
+                            <p>85</p>
+                        </div>
+            
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📊 Duygusal Dağılım</h2>
+                    <div class="emotion-grid">
+                        <div class="emotion-item">
+                            <h4>Pozitif</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill excellent" style="width: 50%"></div>
+                            </div>
+                            <p>50%</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Negatif</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill average" style="width: 0%"></div>
+                            </div>
+                            <p>0%</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Nötr</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill good" style="width: 50%"></div>
+                            </div>
+                            <p>50%</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Stres Seviyesi</h4>
+                            <p>15/100</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>🧠 MBTI Kişilik Analizi</h2>
+                    <div class="emotion-grid">
+        
+                        <div class="emotion-item" style="grid-column: span 2;">
+                            <h4>Tahmin Edilen Kişilik Tipi</h4>
+                            <h2 style="color: #667eea; margin: 10px 0;">Savunucu (ISFJ)</h2>
+                            <p>Güvenilirlik: 70%</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Dışadönüklük/İçedönüklük</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill good" 
+                                     style="width: 40%"></div>
+                            </div>
+                            <p>İçedönük (40%)</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Algılama/Sezgi</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill good" 
+                                     style="width: 50%"></div>
+                            </div>
+                            <p>Algısal (50%)</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Düşünme/Hissetme</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill good" 
+                                     style="width: 40%"></div>
+                            </div>
+                            <p>Düşünme Odaklı (40%)</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>Yargılama/Algılama</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill good" 
+                                     style="width: 60%"></div>
+                            </div>
+                            <p>Algılama Odaklı (60%)</p>
+                        </div>
+            
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📝 Video İçerik Analizi</h2>
+                    <div class="text-content">TRANSKRIPT:
+00:03 Merhaba. Benim adım Azra Begüm Aksu.
+00:07 Doğumum Kırıkkale.
+00:09 Aynen 2000 yılında doğdum.
+00:11 24 yaşındayım.
+00:14 Mezun olduğum bölüm ise
+00:16 bilişim teknolojileri okudum.
+00:17 Web tasarımcısıyım.
+00:19 Şu anda da açık öğretim okuyorum.
+00:21 Hani bu 2 yıllık bir üniversite.
+00:23 Bankacılık ve sigortacılık üzerine.
+00:27 Türkçe dışında bildiğim bir dil yok.
+00:29 Hani orta seviyede
+00:31 İngilizce biliyorum.
+00:33 Satış deneyimlerim tabii ki de var.
+00:37 7 yıllık bir tecrübem bulunuyor.
+00:40 Hani mobil hatlar olsun, genel merkez olsun,
+00:42 Turkcell,
+00:43 telekom bayilik
+00:45 aynı zamanda
+00:46 yazılım üzerine bir okulda çalışmıştım.
+00:48 Orada da öğretmenlik yaptım.
+00:50 Hem ücretsiz dersi
+00:52 hem de sonrasında
+00:54 satış konusunda
+00:56 bir arama sağladım.
+00:57 Onun dışında söyleyeceklerim
+00:58 bu kadar. Teşekkür ederim.
+
+EKRAN METİNLERİ:
+Yok.
+
+ANA KONULAR:
+Bu videoda Azra Begüm Aksu adlı kişi kendini tanıtıyor. Kısaca yaşam öyküsünden, eğitiminden ve iş deneyimlerinden bahsediyor.
+
+*   **Kişisel Bilgiler:** 2000 doğumlu, 24 yaşında, Kırıkkale doğumlu.
+*   **Eğitim:** Bilişim teknolojileri mezunu, aynı zamanda bankacılık ve sigortacılık üzerine 2 yıllık açık öğretim okuyor.
+*   **Beceriler:** Web tasarımcısı, orta düzeyde İngilizce biliyor.
+*   **İş Deneyimi:** 7 yıllık satış deneyimi var (mobil hatlar, genel merkez, Turkcell, telekom bayiliği, yazılım). Okulda öğretmenlik yapmış ve satış konusunda da deneyimi bulunuyor.</div>
+                </div>
+
+                <div class="recommendation">
+                    <h2>💡 İK Önerisi</h2>
+                    <p><strong>Genel Değerlendirme:</strong> Ortalama performans. Aday potansiyel gösteriyor ancak gelişim alanları mevcut.</p>
+                    
+                    <h4>Güçlü Yanlar:</h4>
+                    <ul>
+                        <li>İletişim becerileri güçlü</li>
+                    </ul>
+                    
+                    <h4>Gelişim Alanları:</h4>
+                    <ul>
+                        <li>Belirgin gelişim alanları tespit edilmedi</li>
+                    </ul>
+                    
+                    <h4>Karar Önerisi:</h4>
+                    <p>🟠 KARARSIZ - Başka adaylarla karşılaştırılması önerilir.</p>
+                </div>
+            </div>
+
+            <script>
+                // Ana Duygular (Neutral Dahil)
+                const emotionsData = {
+                    labels: ['Mutluluk', 'Üzüntü', 'Öfke', 'Şaşkınlık', 'Korku', 'Nötr'],
+                    datasets: [{
+                        data: [
+                            15.0,
+                            5.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            80.0
+                        ],
+                        backgroundColor: [
+                            '#FFD700',
+                            '#4682B4', 
+                            '#DC143C',
+                            '#FF69B4',
+                            '#800080',
+                            '#808080'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                };
+
+                // Detaylı Duygular
+                const detailedEmotionsData = {
+                    labels: ['İğrenme', 'Güven', 'Rahat', 'Profesyonel'],
+                    datasets: [{
+                        data: [
+                            0.0,
+                            60.0,
+                            70.0,
+                            70.0
+                        ],
+                        backgroundColor: [
+                            '#CD853F',
+                            '#32CD32',
+                            '#20B2AA',
+                            '#4169E1'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                };
+
+                // Genel Duygusal Durum Grafik Verileri
+                const sentimentData = {
+                    labels: ['Pozitif', 'Negatif', 'Nötr'],
+                    datasets: [{
+                        data: [
+                            50.0,
+                            0.0,
+                            50.0
+                        ],
+                        backgroundColor: [
+                            '#28a745',
+                            '#dc3545',
+                            '#6c757d'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                };
+
+                // Radar Chart (Altıgen Grafik)
+                const radarData = {
+                    labels: ['İletişim', 'Güven', 'Motivasyon', 'Stres Yönetimi', 'Profesyonellik', 'Genel Performans'],
+                    datasets: [{
+                        label: 'Performans Skoru',
+                        data: [
+                            70.0,
+                            60.0,
+                            60.0,
+                            85.0,
+                            70.0,
+                            61.0
+                        ],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointBackgroundColor: 'rgb(54, 162, 235)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(54, 162, 235)',
+                        borderWidth: 3
+                    }]
+                };
+
+                // Ana Duygular Pasta Grafik
+                const emotionsCtx = document.getElementById('emotionsChart').getContext('2d');
+                new Chart(emotionsCtx, {
+                    type: 'pie',
+                    data: emotionsData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 12,
+                                    padding: 8,
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + '%';
+                                    }
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 10,
+                                bottom: 10
+                            }
+                        }
+                    }
+                });
+
+                // Genel Duygusal Durum Bar Grafik
+                const sentimentCtx = document.getElementById('sentimentChart').getContext('2d');
+                new Chart(sentimentCtx, {
+                    type: 'bar',
+                    data: sentimentData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    },
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 10,
+                                bottom: 10
+                            }
+                        }
+                    }
+                });
+
+                // Detaylı Duygular Pasta Grafik
+                const detailedEmotionsCtx = document.getElementById('detailedEmotionsChart').getContext('2d');
+                new Chart(detailedEmotionsCtx, {
+                    type: 'doughnut',
+                    data: detailedEmotionsData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 10,
+                                    padding: 6,
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + '%';
+                                    }
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 10,
+                                bottom: 10
+                            }
+                        }
+                    }
+                });
+
+                // Radar Chart (Altıgen Grafik)
+                const radarCtx = document.getElementById('radarChart').getContext('2d');
+                new Chart(radarCtx, {
+                    type: 'radar',
+                    data: radarData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                min: 0,
+                                ticks: {
+                                    stepSize: 20,
+                                    callback: function(value) {
+                                        return value + '%';
+                                    },
+                                    font: {
+                                        size: 9
+                                    },
+                                    backdropColor: 'transparent'
+                                },
+                                pointLabels: {
+                                    font: {
+                                        size: 11
+                                    },
+                                    padding: 15
+                                },
+                                grid: {
+                                    color: '#e0e0e0'
+                                },
+                                angleLines: {
+                                    color: '#e0e0e0'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        size: 10
+                                    },
+                                    padding: 15,
+                                    usePointStyle: true
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 20,
+                                bottom: 20,
+                                left: 20,
+                                right: 20
+                            }
+                        }
+                    }
+                });
+            </script>
+        </body>
+        </html>
+        

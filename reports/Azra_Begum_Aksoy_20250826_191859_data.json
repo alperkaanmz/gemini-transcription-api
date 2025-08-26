@@ -1,0 +1,66 @@
+{
+  "candidate_name": "Azra Begüm Aksoy",
+  "position": "Test Pozisyonu",
+  "analysis_date": "2025-08-26T19:18:59.072550",
+  "text_analysis": "TRANSKRIPT:\n00:03 Merhaba. Benim adım Azra Begüm Aksu.\n00:07 Doğumum Kırıkkale.\n00:09 Aynen 2000 yılında doğdum.\n00:11 24 yaşındayım.\n00:14 Mezun olduğum bölüm ise\n00:16 bilişim teknolojileri okudum.\n00:17 Web tasarımcısıyım.\n00:19 Şu anda da açık öğretim okuyorum.\n00:21 Hani bu 2 yıllık bir üniversite.\n00:23 Bankacılık ve sigortacılık üzerine.\n00:27 Türkçe dışında bildiğim bir dil yok.\n00:29 Hani orta seviyede\n00:31 İngilizce biliyorum.\n00:33 Satış deneyimlerim tabii ki de var.\n00:37 7 yıllık bir tecrübem bulunuyor.\n00:40 Hani mobil hatlar olsun, genel merkez olsun,\n00:42 Turkcell,\n00:43 telekom bayilik\n00:45 aynı zamanda\n00:46 yazılım üzerine bir okulda çalışmıştım.\n00:48 Orada da öğretmenlik yaptım.\n00:50 Hem ücretsiz dersi\n00:52 hem de sonrasında\n00:54 satış konusunda\n00:56 bir arama sağladım.\n00:57 Onun dışında söyleyeceklerim\n00:58 bu kadar. Teşekkür ederim.\n\nEKRAN METİNLERİ:\nYok.\n\nANA KONULAR:\nBu videoda Azra Begüm Aksu adlı kişi kendini tanıtıyor. Kısaca yaşam öyküsünden, eğitiminden ve iş deneyimlerinden bahsediyor.\n\n*   **Kişisel Bilgiler:** 2000 doğumlu, 24 yaşında, Kırıkkale doğumlu.\n*   **Eğitim:** Bilişim teknolojileri mezunu, aynı zamanda bankacılık ve sigortacılık üzerine 2 yıllık açık öğretim okuyor.\n*   **Beceriler:** Web tasarımcısı, orta düzeyde İngilizce biliyor.\n*   **İş Deneyimi:** 7 yıllık satış deneyimi var (mobil hatlar, genel merkez, Turkcell, telekom bayiliği, yazılım). Okulda öğretmenlik yapmış ve satış konusunda da deneyimi bulunuyor.",
+  "emotion_analysis": {
+    "facial_emotions": {
+      "happiness": 15,
+      "sadness": 5,
+      "anger": 0,
+      "surprise": 0,
+      "fear": 0,
+      "disgust": 0,
+      "neutral": 80,
+      "confidence": 60
+    },
+    "voice_analysis": {
+      "energy_level": 40,
+      "speech_pace": 60,
+      "voice_stability": 80,
+      "emotional_intensity": 30
+    },
+    "body_language": {
+      "posture": 70,
+      "hand_gestures": 10,
+      "eye_contact": 85,
+      "confidence_level": 60,
+      "comfort_level": 70,
+      "professionalism": 70
+    },
+    "overall_sentiment": {
+      "positive_percentage": 50,
+      "negative_percentage": 0,
+      "neutral_percentage": 50,
+      "stress_level": 15,
+      "motivation_level": 60,
+      "communication_skill": 70
+    },
+    "mbti_analysis": {
+      "extraversion_introversion": 40,
+      "sensing_intuition": 50,
+      "thinking_feeling": 40,
+      "judging_perceiving": 60,
+      "predicted_type": "ISFJ",
+      "confidence_level": 70,
+      "personality_traits": [
+        "Responsible",
+        "Practical",
+        "Loyal",
+        "Organized",
+        "Helpful"
+      ],
+      "predicted_type_tr": "Savunucu (ISFJ)"
+    },
+    "facial_emotions_tr": {
+      "Mutluluk": 15,
+      "Üzüntü": 5,
+      "Öfke": 0,
+      "Şaşkınlık": 0,
+      "Korku": 0,
+      "İğrenme": 0,
+      "Nötr": 80,
+      "Güven": 60
+    }
+  }
+}

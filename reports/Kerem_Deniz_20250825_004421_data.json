@@ -1,0 +1,40 @@
+{
+  "candidate_name": "Kerem Deniz",
+  "position": "Gelismis Test Pozisyonu",
+  "analysis_date": "2025-08-25T00:44:21.719293",
+  "text_analysis": "TRANSKRIPT:\nMerhaba, ben avukat Kerem Deniz. Hava hukuku ve uçak motorları alanında uzmanım. Yeditepe Üniversitesi'nde 3 yıl boyunca hava taşımacılığı sözleşmeleri, sorumluluk rejimleri ve uçak motorlarının uluslararası transfer süreçleri üzerine dersler verdim. Akademideki bu deneyimimi şimdi doğrudan sahada kullanıyorum. Pegasus Havayolları başta olmak üzere büyük havayolu şirketleri ve özel jet işletmelerinde hukuki danışmanlık veriyorum. Çalışmalarımda özellikle uçak motoru alım satımı ve kiralaması sözleşmeleri, uluslararası transferlerde teknik kayıtların nitelenmesi, ödeme teslim uyumunun sağlanması ve gümrük süreçlerinin sorunsuz yönetimi öne çıkıyor. Hem akademik hem de pratik tecrübem sayesinde havacılık sektöründeki şirketlere karmaşık uluslararası işlemleri güvenli ve hızlı biçimde sonuçlandırmaları için destek oluyorum.\n\nEKRAN METİNLERİ:\nBu videoda ekranda herhangi bir yazı bulunmamaktadır.\n\nANA KONULAR:\nBu video, bir avukatın hava hukuku ve uçak motorları alanındaki uzmanlığını anlatmaktadır. Konuşmacı, üniversitede verdiği derslerden edindiği tecrübeleri özel havayolu şirketleri ve jet işletmelerine danışmanlık hizmeti verirken kullandığını belirtmektedir. Özellikle uçak motorlarının alımı, satımı, kiralanması ve uluslararası transferleri gibi konularda hukuki destek sağladığı vurgulanmaktadır. Konuşmacı, bu süreçlerde teknik kayıtların incelenmesi, ödeme ve teslim süreçlerinin düzenlenmesi ve gümrük işlemlerinin sorunsuz yürütülmesi gibi konularda uzmanlaştığını ifade etmektedir. Genel olarak, videonun ana teması, konuşmacının havacılık sektöründeki hukuki danışmanlık deneyimi ve uzmanlığıdır.",
+  "emotion_analysis": {
+    "facial_emotions": {
+      "happiness": 5,
+      "sadness": 10,
+      "anger": 5,
+      "surprise": 5,
+      "fear": 5,
+      "disgust": 5,
+      "neutral": 65,
+      "confidence": 70
+    },
+    "voice_analysis": {
+      "energy_level": 65,
+      "speech_pace": 60,
+      "voice_stability": 80,
+      "emotional_intensity": 40
+    },
+    "body_language": {
+      "posture": 80,
+      "hand_gestures": 20,
+      "eye_contact": 85,
+      "confidence_level": 75,
+      "comfort_level": 70,
+      "professionalism": 85
+    },
+    "overall_sentiment": {
+      "positive_percentage": 30,
+      "negative_percentage": 20,
+      "neutral_percentage": 50,
+      "stress_level": 20,
+      "motivation_level": 70,
+      "communication_skill": 75
+    }
+  }
+}
