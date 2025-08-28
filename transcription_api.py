@@ -130,7 +130,7 @@ def health_check():
 @app.get('/docs')
 def docs():
     """API dokümantasyonu endpoint'i"""
-    base_url = "http://localhost:8001"  # FastAPI için güncellenen port
+    base_url = "http://localhost:8000"  # FastAPI için güncellenen port
     documentation = {
         'title': 'Video Transkripsiyon API',
         'description': 'Gemini 2.5 Flash Lite kullanarak video dosyalarından sadece konuşma metni çıkarma',
@@ -341,4 +341,4 @@ if __name__ == '__main__':
     print("POST /transcribe - Dosya yükleme ile transkripsiyon")
     print("Otomatik Swagger UI: http://localhost:8000/docs")
     
-    uvicorn.run(app, host='0.0.0.0', port=8001)
+    uvicorn.run(app, host='0.0.0.0', port=8000)
