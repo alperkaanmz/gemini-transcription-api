@@ -9,9 +9,15 @@ reportlab>=4.0.0
 beautifulsoup4>=4.13.0
 weasyprint>=61.0
 pdfkit>=1.0.0
+<<<<<<< HEAD
 
 # API Dependencies
 fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
 python-multipart>=0.0.6
 pydantic>=2.5.0
+=======
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+>>>>>>> 833d93d7ac2e1ad94cd7add6c449e8e67349d8a9

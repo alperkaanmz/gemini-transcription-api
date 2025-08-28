@@ -165,8 +165,14 @@ def clean_tek_video_test():
         
         print("✅ Analiz tamamlandı!")
         
+<<<<<<< HEAD:clean_tek_video_test.py
         # Raporu kaydet (sadece HTML ve JSON gösterilecek)
         report_result = analyzer.save_report(result)
+=======
+        # Raporu kaydet
+        print("\n📝 Rapor kaydediliyor...")
+        report_result = analyzer.save_report(results)
+>>>>>>> 833d93d7ac2e1ad94cd7add6c449e8e67349d8a9:tek_video_test.py
         
         # Sonuç özeti - basitleştirilmiş
         print(f"\n{'='*60}")
@@ -181,10 +187,21 @@ def clean_tek_video_test():
         print(f"� JSON Verileri: {os.path.basename(report_result['json_path'])}")
         print(f"\nℹ️  API için gerekli dosyalar otomatik olarak oluşturuldu.")
         
+<<<<<<< HEAD:clean_tek_video_test.py
         # Rapor açma seçenekleri
+=======
+        print(f"👤 Belirlenen Aday: {candidate_name}")
+        print(f"💼 Pozisyon: {results['position']}")
+        print(f"📊 Token Kullanımı: {cost_report['total_tokens']['total']:,}")
+        print(f"💰 Maliyet: ${cost_report['total_cost_usd']:.6f} (₺{cost_report['total_cost_usd'] * 34:.4f})")
+        print(f"📄 HTML Raporu: {os.path.basename(report_result['html_path'])}")
+        
+        # Raporu açma seçeneği
+>>>>>>> 833d93d7ac2e1ad94cd7add6c449e8e67349d8a9:tek_video_test.py
         print()
         print("📊 RAPOR AÇMA SEÇENEKLERİ:")
         
+<<<<<<< HEAD:clean_tek_video_test.py
         # HTML raporu açma
         html_ac = input("🌐 HTML raporunu tarayıcıda açmak ister misiniz? (e/E = Evet): ").strip().lower()
         if html_ac in ['e', 'evet']:
@@ -205,6 +222,11 @@ def clean_tek_video_test():
                     print("📄 PDF raporu açıldı!")
                 except Exception as e:
                     print(f"⚠️ PDF raporu açılamadı: {e}")
+=======
+        if rapor_ac in ['e', 'evet']:
+            os.system(f'start "" "{report_result["html_path"]}"')
+            print("🌐 Rapor tarayıcıda açıldı!")
+>>>>>>> 833d93d7ac2e1ad94cd7add6c449e8e67349d8a9:tek_video_test.py
         
         # Reports klasörünü açma
         klasor_ac = input("📂 Reports klasörünü açmak ister misiniz? (e/E = Evet): ").strip().lower()
@@ -216,6 +238,7 @@ def clean_tek_video_test():
             except Exception as e:
                 print(f"⚠️ Klasör açılamadı: {e}")
         
+<<<<<<< HEAD:clean_tek_video_test.py
         # Rapor listesi
         if report_result['pdf_path'] and report_result['api_pdf_path']:
             print(f"📊 Oluşturulan Raporlar:")
@@ -224,6 +247,10 @@ def clean_tek_video_test():
             print(f"   • CSV: {os.path.basename(report_result['csv_path'])}")
             print(f"   • PDF: {os.path.basename(report_result['pdf_path'])}")
             print(f"   • API PDF: {os.path.basename(report_result['api_pdf_path'])}")
+=======
+        print(f"\n🎉 Test başarıyla tamamlandı!")
+        print(f"📊 Detaylı raporu inceleyin: {os.path.basename(report_result['html_path'])}")
+>>>>>>> 833d93d7ac2e1ad94cd7add6c449e8e67349d8a9:tek_video_test.py
         
     except Exception as e:
         print(f"\n❌HATA:")
