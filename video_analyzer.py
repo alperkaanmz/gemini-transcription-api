@@ -35,7 +35,7 @@ class VideoAnalyzer:
         import time
         
         print(f"Video yükleniyor: {video_path}")
-        video_file = genai.upload_file(path=video_path, mime_type=self._get_mime_type(video_path))
+        video_file = genai.upload_file(video_path, mime_type=self._get_mime_type(video_path))
         print(f"Video yüklendi: {video_file.uri}")
         
         # Video işlenmesini bekle
@@ -1447,6 +1447,8 @@ Sonuç: Aday {position} pozisyonu için {'önerilmektedir' if overall_score >= 6
             
         except Exception as e:
             print(f"⚠️ PDF oluşturma hatası: {e}")
+            import traceback
+            print(f"⚠️ Detaylı hata: {traceback.format_exc()}")
             
             # Yedek seçenek: PDFKit
             try:

@@ -186,7 +186,7 @@ def tek_video_test():
         
         # Raporu kaydet
         print("\n📝 Rapor kaydediliyor...")
-        report_path = analyzer.save_report(results)
+        report_result = analyzer.save_report(results)
         
         # Sonuç özeti
         print(f"\n{'='*60}")
@@ -200,14 +200,14 @@ def tek_video_test():
         print(f"💼 Pozisyon: {results['position']}")
         print(f"📊 Token Kullanımı: {cost_report['total_tokens']['total']:,}")
         print(f"💰 Maliyet: ${cost_report['total_cost_usd']:.6f} (₺{cost_report['total_cost_usd'] * 34:.4f})")
-        print(f"📄 HTML Raporu: {os.path.basename(report_path)}")
+        print(f"📄 HTML Raporu: {os.path.basename(report_result['html_path'])}")
         
         # Raporu açma seçeneği
         print()
         rapor_ac = input("HTML raporunu tarayıcıda açmak ister misiniz? (e/E = Evet): ").strip().lower()
         
         if rapor_ac in ['e', 'evet']:
-            os.system(f'start "" "{report_path}"')
+            os.system(f'start "" "{report_result["html_path"]}"')
             print("🌐 Rapor tarayıcıda açıldı!")
         
         # Reports klasörünü açma
@@ -218,7 +218,7 @@ def tek_video_test():
             print("📂 Reports klasörü açıldı!")
         
         print(f"\n🎉 Test başarıyla tamamlandı!")
-        print(f"📊 Detaylı raporu inceleyin: {os.path.basename(report_path)}")
+        print(f"📊 Detaylı raporu inceleyin: {os.path.basename(report_result['html_path'])}")
         
     except Exception as e:
         print(f"\n❌ HATA OLUŞTU:")
