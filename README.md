@@ -9,14 +9,35 @@ Bu API, video dosyalarından konuşma metni çıkarmak için Google Gemini 2.5 F
 - Sağlık kontrolü ve dokümantasyon endpoint'leri
 
 ## Kurulum
-1. Gerekli paketleri yükleyin:
-   ```bash
-   pip install -r requirements.txt
+
+### 1. Gerekli paketleri yükleyin:
+```bash
+pip install -r requirements.txt
+```
+
+### 2. API Anahtarı Konfigürasyonu
+
+#### Local Development için:
+1. `.env` dosyası oluşturun:
    ```
-2. Google Gemini API anahtarınızı ortam değişkeni olarak ekleyin:
-   ```bash
-   set GEMINI_API_KEY=your_api_key
+   GEMINI_API_KEY=your_actual_api_key_here
    ```
+
+#### Windows:
+```bash
+set GEMINI_API_KEY=your_actual_api_key_here
+```
+
+#### Linux/Mac:
+```bash
+export GEMINI_API_KEY=your_actual_api_key_here
+```
+
+### 3. Render.com'da Deployment için:
+1. Render dashboard'ında projenizi oluşturun
+2. Environment Variables bölümünde:
+   - Key: `GEMINI_API_KEY`
+   - Value: `your_actual_api_key_here`
 
 ## Çalıştırma
 ```bash

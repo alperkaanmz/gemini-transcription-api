@@ -8,6 +8,10 @@ import time
 import json
 from datetime import datetime
 import re
+from dotenv import load_dotenv
+
+# .env dosyasını yükle (local development için)
+load_dotenv()
 
 app = FastAPI(
     title="Video Transkripsiyon API",
@@ -115,7 +119,10 @@ def secure_filename(filename):
     return filename
 
 # API anahtarını çevre değişkeninden al
-API_KEY = os.getenv('GEMINI_API_KEY', '***REMOVED***')
+API_KEY = os.getenv('GEMINI_API_KEY')
+if not API_KEY:
+    raise ValueError("GEMINI_API_KEY environment variable is required")
+
 transcription_service = TranscriptionService(API_KEY)
 
 @app.get('/health')
