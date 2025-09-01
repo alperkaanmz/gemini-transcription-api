@@ -68,3 +68,8 @@ curl -X POST -H "Content-Type: application/json" -d '{"url": "https://example.co
 - API sadece konuşma metni döndürür, analiz veya duygu tespiti yapmaz.
 - Geçici dosyalar otomatik silinir.
 - Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+## Notlar
+- API sadece konuşma metni döndürür, analiz veya duygu tespiti yapmaz.
+- Geçici dosyalar otomatik silinir.
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
