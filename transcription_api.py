@@ -98,9 +98,8 @@ class TranscriptionService:
         Videodaki tüm konuşmaları tam olarak transkript et. 
         
         Lütfen:
-        - Sadece konuşulan sözleri yaz
-        - Hiçbir analiz, yorum veya ek bilgi ekleme
-        - Konuşmacı varsa "[Konuşmacı 1]", "[Konuşmacı 2]" şeklinde ayır
+        - Sadece konuşulan sözleri yaz.
+        - Hiçbir analiz, yorum veya ek bilgi, zaman vs. ekleme
         - Eğer konuşma yoksa "Videoda konuşma tespit edilmedi" yaz
         
         TRANSKRIPT:
