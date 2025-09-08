@@ -136,7 +136,7 @@ class TranscriptionService:
             str: Videodan çıkarılan konuşma metni
         """
         prompt = """
-Lütfen bu videodan sadece konuşulan kelimeleri çıkar.
+Lütfen bu videodan sadece ses analizi ve ses transkripsiyonu çıkar.
 
 SADECE YAPILACAKLAR:
 - Konuşulan sözleri yaz
@@ -150,6 +150,8 @@ ASLA YAPILMAYACAKLAR:
 - Konuşmacı etiketleri
 - Müzik/ses efekti açıklamaları
 - Analiz veya yorum
+- Ekranda görünen metinleri yazma
+- Sadece Ses Transkripsiyonu yap
 
 Eğer konuşma yok ise: "Videoda konuşma tespit edilmedi"
 
