@@ -82,6 +82,49 @@ class TranscriptionService:
         print(f"\nVideo hazır: {video_file.state.name}")
         return video_file
     
+    def _clean_repetitive_text(self, text: str) -> str:
+        """
+        Tekrar eden cümleleri temizle
+        """
+        if not text or text.strip() == "":
+            return "Videoda konuşma tespit edilmedi"
+            
+        lines = text.strip().split('\n')
+        cleaned_lines = []
+        seen_sentences = set()
+        
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+                
+            # Aynı cümlenin tekrarını engelle
+            sentences = line.split('. ')
+            unique_sentences = []
+            
+            for sentence in sentences:
+                sentence = sentence.strip()
+                if sentence and sentence not in seen_sentences:
+                    seen_sentences.add(sentence)
+                    unique_sentences.append(sentence)
+                elif len(unique_sentences) == 0 and sentence:
+                    # İlk cümle ise ekle (tamamen aynı olmadıkça)
+                    unique_sentences.append(sentence)
+            
+            if unique_sentences:
+                cleaned_line = '. '.join(unique_sentences)
+                if not cleaned_line.endswith('.') and not cleaned_line.endswith('!') and not cleaned_line.endswith('?'):
+                    cleaned_line += '.'
+                cleaned_lines.append(cleaned_line)
+        
+        result = ' '.join(cleaned_lines)
+        
+        # Eğer sonuç çok kısa veya anlamsızsa
+        if len(result.strip()) < 10:
+            return "Videoda konuşma tespit edilmedi"
+            
+        return result.strip()
+    
     def transcribe_video(self, video_file) -> str:
         """
         Videodan sadece transkripsiyon çıkar
@@ -93,20 +136,44 @@ class TranscriptionService:
             str: Videodan çıkarılan konuşma metni
         """
         prompt = """
-        Bu videoyu analiz et ve SADECE aşağıdaki işlemi yap:
-        
-        Videodaki tüm konuşmaları tam olarak transkript et. 
-        
-        Lütfen:
-        - Sadece konuşulan sözleri yaz.
-        - Hiçbir analiz, yorum veya ek bilgi, zaman vs. ekleme
-        - Eğer konuşma yoksa "Videoda konuşma tespit edilmedi" yaz
-        
-        TRANSKRIPT:
+Lütfen bu videodan sadece konuşulan kelimeleri çıkar.
+
+SADECE YAPILACAKLAR:
+- Konuşulan sözleri yaz
+- Doğru yazım ve noktalama kullan
+- Net ve temiz metin ver
+
+ASLA YAPILMAYACAKLAR:
+- Zaman damgası ekleme (00:01, 0:05 vb.)
+- Tekrarlayan cümleler yazma
+- Parantez içi açıklamalar
+- Konuşmacı etiketleri
+- Müzik/ses efekti açıklamaları
+- Analiz veya yorum
+
+Eğer konuşma yok ise: "Videoda konuşma tespit edilmedi"
+
+Transkripsiyon:
         """
         
-        response = self.model.generate_content([video_file, prompt])
-        return response.text
+        # Tekrar problemini önlemek için generation config ekle
+        generation_config = {
+            "temperature": 0.1,  # Düşük randomness
+            "max_output_tokens": 2048,  # Maksimum token limiti
+            "top_p": 0.8,  # Nucleus sampling
+            "top_k": 40  # Top-k sampling
+        }
+        
+        response = self.model.generate_content(
+            [video_file, prompt], 
+            generation_config=generation_config
+        )
+        
+        # Tekrar eden metinleri temizle
+        raw_text = response.text
+        cleaned_text = self._clean_repetitive_text(raw_text)
+        
+        return cleaned_text
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -220,9 +287,12 @@ print(result["transcription"])
         },
         'notes': [
             'API sadece transkripsiyon yapar, duygu analizi yapmaz',
-            'Konuşmacı ayrımı [Konuşmacı 1], [Konuşmacı 2] şeklinde yapılır',
+            'Konuşulan dilin yazım kurallarına göre düzgün metin döndürür',
+            'Tekrar eden cümleleri otomatik olarak temizler',
+            'Konuşma hatalarını düzeltir ve uygun noktalama ekler',
             'Geçici dosyalar otomatik olarak silinir',
-            'Gemini 2.5 Flash Lite modeli kullanılır'
+            'Gemini 2.5 Flash Lite modeli kullanılır',
+            'Sadece konuşulan kelimeler döndürülür, zaman damgası veya ek bilgi eklenmez'
         ]
     }
     return documentation
