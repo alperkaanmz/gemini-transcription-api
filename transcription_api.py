@@ -41,7 +41,7 @@ class TranscriptionService:
         """
         self.api_key = api_key
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-2.5-flash-lite')
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
         
     def _get_mime_type(self, file_path: str) -> str:
         """Video dosyasının MIME tipini belirle"""
@@ -160,7 +160,7 @@ Transkripsiyon:
         
         # Tekrar problemini önlemek için generation config ekle
         generation_config = {
-            "temperature": 0,  # Düşük randomness
+            "temperature": 0.1,  # Düşük randomness
             "max_output_tokens": 2048,  # Maksimum token limiti
             "top_p": 0.8,  # Nucleus sampling
             "top_k": 40  # Top-k sampling
