@@ -142,7 +142,9 @@ SADECE YAPILACAKLAR:
 - Konuşulan sözleri yaz
 - Doğru yazım ve noktalama kullan
 - Net ve temiz metin ver
-
+- Konuşulan dili tespit et. konuşulan dilde çıktı ver.
+- Sadece Ses Transkripsiyonu yap.
+- Orjinal dilinde yaz. 
 ASLA YAPILMAYACAKLAR:
 - Zaman damgası ekleme (00:01, 0:05 vb.)
 - Tekrarlayan cümleler yazma
@@ -151,7 +153,6 @@ ASLA YAPILMAYACAKLAR:
 - Müzik/ses efekti açıklamaları
 - Analiz veya yorum
 - Ekranda görünen metinleri yazma
-- Sadece Ses Transkripsiyonu yap
 
 Eğer konuşma yok ise: "Videoda konuşma tespit edilmedi"
 
