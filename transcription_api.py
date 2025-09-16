@@ -136,27 +136,26 @@ class TranscriptionService:
             str: Videodan çıkarılan konuşma metni
         """
         prompt = """
-Lütfen bu videodan sadece ses analizi ve ses transkripsiyonu çıkar.
+Transcribe the spoken words from this video exactly as they are spoken.
 
-SADECE YAPILACAKLAR:
-- Konuşulan sözleri yaz
-- Doğru yazım ve noktalama kullan
-- Net ve temiz metin ver
-- Konuşulan dili tespit et. konuşulan dilde çıktı ver.
-- Sadece Ses Transkripsiyonu yap.
-- Orjinal dilinde yaz. 
-ASLA YAPILMAYACAKLAR:
-- Zaman damgası ekleme (00:01, 0:05 vb.)
-- Tekrarlayan cümleler yazma
-- Parantez içi açıklamalar
-- Konuşmacı etiketleri
-- Müzik/ses efekti açıklamaları
-- Analiz veya yorum
-- Ekranda görünen metinleri yazma
+INSTRUCTIONS:
+- Listen to the audio and write down exactly what is being said
+- Use the same language that is being spoken in the video
+- Do not translate or change the language
+- Use proper spelling and punctuation for whatever language is spoken
+- Provide clean, readable text
 
-Eğer konuşma yok ise: "Videoda konuşma tespit edilmedi"
+NEVER DO:
+- Translate to any other language
+- Add timestamps
+- Add speaker labels
+- Describe sounds or music
+- Add explanations or analysis
+- Write anything not actually spoken
 
-Transkripsiyon:
+If no speech is detected, respond with: "Videoda konuşma tespit edilemedi."
+
+Transcription:
         """
         
         # Tekrar problemini önlemek için generation config ekle
